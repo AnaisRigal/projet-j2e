@@ -5,6 +5,8 @@
  */
 package metier;
 
+import entitees.Utilisateur;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,13 +17,13 @@ import javax.ejb.Local;
 @Local
 public interface GestionUtilisateurLocal {
         
-    long creerUtilisateur(String nom, String prenom) throws exceptions.UtilisateurExistantException;
+    long ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws exceptions.UtilisateurExistantException;
+    
+    //long chercherUtilisateur(Integer id) throws exceptions.UtilisateurInconnuException;
 
-    long chercherUtilisateur(Integer id) throws exceptions.UtilisateurInconnuException;
+    List<Utilisateur> listeUtilisateurs() throws exceptions.UtilisateurInconnuException;
 
-    List<Long> listeNumComptes(long idClient) throws exceptions.UtilisateurInconnuException;
-
-    long creerCompte(long idClient) throws exceptions.UtilisateurInconnuException;
+    void supprimer(long idUtilisateur) throws exceptions.UtilisateurInconnuException;
     
     //liste de tout les utilisateur 
     

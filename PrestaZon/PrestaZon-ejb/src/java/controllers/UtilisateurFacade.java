@@ -6,9 +6,12 @@
 package controllers;
 
 import entitees.Utilisateur;
+import java.math.BigDecimal;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,19 @@ public class UtilisateurFacade extends AbstractFacade<Utilisateur> implements Ut
 
     public UtilisateurFacade() {
         super(Utilisateur.class);
+    }
+
+    @Override
+    public BigDecimal chercherUtilisateur(String mail) throws exceptions.UtilisateurInconnuException {
+        try {
+            Query q = em.createQuery(
+               "select u from Utilisateur u where u.mail = :mail");
+            q.setParameter("mail", mail);
+            Utilisateur c = (Utilisateur) q.getSingleResult();
+            return c.getIdutilisateur();
+        } catch(NoResultException e) {
+            throw new exceptions.UtilisateurInconnuException();
+        }        
     }
     
 }

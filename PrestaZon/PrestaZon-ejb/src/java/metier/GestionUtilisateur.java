@@ -13,7 +13,11 @@ import javax.ejb.Stateless;
 import entitees.Utilisateur;
 //import entitees.Compte;
 import controllers.UtilisateurFacadeLocal;
-import controllers.CompteFacadeLocal;
+import exceptions.UtilisateurExistantException;
+import exceptions.UtilisateurInconnuException;
+import java.math.BigDecimal;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -21,57 +25,49 @@ import controllers.CompteFacadeLocal;
  * @author nolwe
  */
 @Stateless
-public class GestionUtilisateur {
+public class GestionUtilisateur implements GestionUtilisateurLocal {
     
     @EJB
-    private CompteFacadeLocal compteFacade;
-
-    @EJB
-    private ClientFacadeLocal clientFacade;
-    
+    private UtilisateurFacadeLocal utilisateurFacade;
 
     @Override
-    public long creerClient(String nom, String prenom) throws exceptions.ClientExistantException {
+    public long ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws UtilisateurExistantException {
         try {
-            // si le client n'existe pas il y aura une exception
-            clientFacade.chercherClient(nom, prenom);
-            // ici on est sûr qu'il existe donc on lance l'exception
-            throw new exceptions.ClientExistantException();
-        } catch (exceptions.ClientInconnuException e) {
+            utilisateurFacade.chercherUtilisateur(mail);
+            throw new exceptions.UtilisateurExistantException();
+        } catch (UtilisateurInconnuException ex) {  
         }
-        Client c = new Client();
-        c.setNom(nom);
-        c.setPrenom(prenom);
-        return (long) clientFacade.create(c);
+        Utilisateur u = new Utilisateur();
+        u.setNom(nom);
+        u.setPrenom(prenom);
+        u.setMotdepasse(motDePasse);
+        u.setAdresse(adresse);
+        u.setTelephone(telephone);
+        u.setMail(mail);
+        u.setIdcompte(idCompte);
+        return u.getIdutilisateur().longValue();
+        
+    }
+    
+    
+
+    @Override
+    public List<Utilisateur> listeUtilisateurs() throws UtilisateurInconnuException {
+            
+        return utilisateurFacade.findAll();
     }
 
     @Override
-    public long chercherClient(String nom, String prenom) throws exceptions.ClientInconnuException {
-        return clientFacade.chercherClient(nom, prenom);
+    public void supprimer(long idUtilisateur) throws UtilisateurInconnuException {
+       Utilisateur u = utilisateurFacade.find(idUtilisateur);
+       if (u == null)
+           throw new UtilisateurInconnuException();
+       utilisateurFacade.remove(u);
     }
+    
 
-    @Override
-    public List<Long> listeNumComptes(long idClient)  throws exceptions.ClientInconnuException {
-        Client c = this.clientFacade.find(idClient);
-        if (c == null)
-            throw new exceptions.ClientInconnuException();
-        ArrayList<Long> listeNC = new ArrayList<Long>();
-        for (Compte compte : c.getComptes()) {
-            listeNC.add(compte.getId());
-        }
-        return listeNC;
-    }
-
-    @Override
-    public long creerCompte(long idClient) throws exceptions.ClientInconnuException  {
-        Client c = this.clientFacade.find(idClient);
-        if (c == null)
-            throw new exceptions.ClientInconnuException();
-        Compte compte = new Compte();
-        compte.setClient(c);
-        c.getComptes().add(compte);
-        return (long) compteFacade.create(compte);
-    }
+     
+  
     
     
 }

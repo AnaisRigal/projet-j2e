@@ -6,6 +6,7 @@
 package controllers;
 
 import entitees.Utilisateur;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -23,6 +24,8 @@ public interface UtilisateurFacadeLocal {
     void remove(Utilisateur utilisateur);
 
     Utilisateur find(Object id);
+    
+    BigDecimal chercherUtilisateur(String mail) throws exceptions.UtilisateurInconnuException ;
 
     List<Utilisateur> findAll();
 
