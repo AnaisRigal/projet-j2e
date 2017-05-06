@@ -25,22 +25,24 @@ public class ClientLourdServiceCommerciale {
      */
     public static void main(String[] args) throws NamingException, UtilisateurInconnuException, UtilisateurExistantException {
         // TODO code application logic here
-        System.setProperty("java.naming.factory.initial",
-        "com.sun.enterprise.naming.SerialInitContextFactory");
-        System.setProperty("org.omg.CORBA.ORBInitialHost",
-        "127.0.0.1");
-        System.setProperty("org.omg.CORBA.ORBInitialPort",
-        "3700");
-        InitialContext context = new InitialContext();
-        
+        System.setProperty("java.naming.factory.initial", "com.sun.enterprise.naming.SerialInitContextFactory");  
+         System.setProperty("org.omg.CORBA.ORBInitialHost", "127.0.0.1");  
+         System.setProperty("org.omg.CORBA.ORBInitialPort", "3700"); 
+         System.setProperty("java.rmi.server.codebase","file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/entitees");
+         InitialContext context = new InitialContext(); 
+        System.out.println("start");
+        //java:global/PrestaZon/PrestaZon-ejb/Libraries/PrestaZonShared/services/
         ServiceCommercialRemote souche = (ServiceCommercialRemote) context.lookup("services.ServiceCommercialRemote");
-        long idCl =0;
+        
+        
+        
+                long idCl =0;
         try {
             idCl = souche.ajoutUtilisateur("Reine", "des neige","frosen","Iceberg",56454685,"fr@wanadoo.fr",1) ;
         } catch(Exception e) {
             System.out.println("création");
         }
         System.out.println(idCl);
-        
+        System.out.println(souche.listeUtilisateurs());
     }
 }
