@@ -15,7 +15,7 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface ServiceCommercialRemote {
-        long ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws exceptions.UtilisateurExistantException;
+    long ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws exceptions.UtilisateurExistantException;
     
 
     List listeUtilisateurs() throws exceptions.UtilisateurInconnuException;
