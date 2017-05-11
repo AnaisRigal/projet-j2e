@@ -4,12 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/entitees/Utilisateur.java</file>
-            <file>file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/controllers/UtilisateurFacadeLocal.java</file>
-            <file>file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/metier/GestionUtilisateur.java</file>
             <file>file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/services/ServiceCommercialRemote.java</file>
-            <file>file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/controllers/UtilisateurFacade.java</file>
+            <file>file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/metier/GestionCommande.java</file>
+            <file>file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/metier/GestionCommandeLocal.java</file>
             <file>file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/services/ServiceCommercial.java</file>
-            <file>file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/metier/GestionUtilisateurLocal.java</file>
         </group>
     </open-files>
 </project-private>
