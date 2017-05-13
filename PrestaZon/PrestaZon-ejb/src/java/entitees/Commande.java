@@ -22,12 +22,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author nolwe
+ * @author Marine
  */
 @Entity
 @Table(name = "COMMANDE")
@@ -36,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Commande.findAll", query = "SELECT c FROM Commande c")
     , @NamedQuery(name = "Commande.findByIdcommande", query = "SELECT c FROM Commande c WHERE c.idcommande = :idcommande")
     , @NamedQuery(name = "Commande.findByDatecommande", query = "SELECT c FROM Commande c WHERE c.datecommande = :datecommande")
-    , @NamedQuery(name = "Commande.findByMontantcommande", query = "SELECT c FROM Commande c WHERE c.montantcommande = :montantcommande")})
+    , @NamedQuery(name = "Commande.findByMontantcommande", query = "SELECT c FROM Commande c WHERE c.montantcommande = :montantcommande")
+    , @NamedQuery(name = "Commande.findByEtatcommande", query = "SELECT c FROM Commande c WHERE c.etatcommande = :etatcommande")})
 public class Commande implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,6 +53,9 @@ public class Commande implements Serializable {
     private Date datecommande;
     @Column(name = "MONTANTCOMMANDE")
     private BigDecimal montantcommande;
+    @Size(max = 11)
+    @Column(name = "ETATCOMMANDE")
+    private String etatcommande;
     @OneToMany(mappedBy = "idcommande")
     private Collection<Ligne> ligneCollection;
     @JoinColumn(name = "IDUTILISATEUR", referencedColumnName = "IDUTILISATEUR")
@@ -86,6 +91,14 @@ public class Commande implements Serializable {
 
     public void setMontantcommande(BigDecimal montantcommande) {
         this.montantcommande = montantcommande;
+    }
+
+    public String getEtatcommande() {
+        return etatcommande;
+    }
+
+    public void setEtatcommande(String etatcommande) {
+        this.etatcommande = etatcommande;
     }
 
     @XmlTransient

@@ -48,9 +48,14 @@ public class ServiceCommercial implements ServiceCommercialRemote {
         return c.afficherCommandes();
     }
 
-    @Override
+   /* @Override
     public String modifierCommande(BigDecimal idligne, Short quantite, BigDecimal idcommande, BigDecimal idproduit) {
         return c.modifierCommande(idligne, quantite, idcommande, idproduit);
+    }
+*/
+    @Override
+    public String modifierCommande( BigDecimal idcommande, String etat) {
+        return c.modifierCommande(idcommande,etat);
     }
 
     @Override

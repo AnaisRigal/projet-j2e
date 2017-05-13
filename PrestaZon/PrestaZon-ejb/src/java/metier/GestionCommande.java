@@ -21,7 +21,7 @@ import javax.ejb.Stateless;
  * @author Marine
  */
 @Stateless
-public class GestionCommande implements GestionCommandeLocal, GestionCommandeRemote {
+public class GestionCommande implements GestionCommandeLocal {
     @EJB
     private LigneFacadeLocal ligne;
     
@@ -46,8 +46,17 @@ public class GestionCommande implements GestionCommandeLocal, GestionCommandeRem
     }
 
     @Override
-    public String modifierCommande(BigDecimal idligne, Short quantite, BigDecimal idcommande, BigDecimal idproduit) {
+    public String modifierCommande( BigDecimal idcommande,String etat) {
         String r = "NOK";
+        Commande c = commande.find((idcommande));
+        if (c!=null && ( c.getEtatcommande().equals("En cours")|| c.getEtatcommande().equals("Validée")||
+          c.getEtatcommande().equals("Préparation")|| c.getEtatcommande().equals("Expédiée")||
+           c.getEtatcommande().equals("Livrée")|| c.getEtatcommande().equals("Annulé"))){
+         
+         c.setEtatcommande(etat);
+         r = "OK";
+        }
+        /*
         for (Ligne l : ligne.findAll()) {
             if (l.getIdligne()==idligne){
                 l.setQuantite(quantite);
@@ -56,6 +65,7 @@ public class GestionCommande implements GestionCommandeLocal, GestionCommandeRem
                 r = "OK";
             }
         }
+    */
     return r;
     }
 

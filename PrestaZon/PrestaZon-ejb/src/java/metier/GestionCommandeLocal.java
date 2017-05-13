@@ -15,7 +15,8 @@ import javax.ejb.Local;
 public interface GestionCommandeLocal {
     List afficherCommandes();
     
-    String modifierCommande ( BigDecimal idligne, Short quantite, BigDecimal idcommande, BigDecimal idproduit  );
+   // String modifierCommande ( BigDecimal idligne, Short quantite, BigDecimal idcommande, BigDecimal idproduit,String etat  );
+    String modifierCommande (BigDecimal idcommande, String etat  );
 
     String supprimerCommande (BigDecimal idcommande);
     

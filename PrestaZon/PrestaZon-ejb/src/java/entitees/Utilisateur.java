@@ -7,15 +7,10 @@ package entitees;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.Collection;
-import javax.ejb.Remote;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,11 +23,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author nolwe
+ * @author Marine
  */
-/*@Remote*/
 @Entity
 @Table(name = "UTILISATEUR")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")
     , @NamedQuery(name = "Utilisateur.findByIdutilisateur", query = "SELECT u FROM Utilisateur u WHERE u.idutilisateur = :idutilisateur")
@@ -48,7 +43,7 @@ public class Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Basic(optional = false)
     @NotNull
     @Column(name = "IDUTILISATEUR")
     private BigDecimal idutilisateur;
@@ -75,10 +70,9 @@ public class Utilisateur implements Serializable {
     private Collection<Commande> commandeCollection;
 
     public Utilisateur() {
-        super();
     }
 
-    public Utilisateur(BigDecimal idutilisateur){
+    public Utilisateur(BigDecimal idutilisateur) {
         this.idutilisateur = idutilisateur;
     }
 
