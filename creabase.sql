@@ -32,7 +32,7 @@ idUtilisateur decimal(20),
 etatCommande varchar(11),
 constraint pk_Commande primary key (idCommande),
 constraint fk_Commande_idUtilisateur foreign key (idUtilisateur) references Utilisateur(idUtilisateur),
-constraint ck_Commande_etat check etatCommande in ('En cours','Validée','Préparation','Expédiée','Livrée','Annulé');
+constraint ck_Commande_etat check (etatCommande in ('En cours','Validée','Préparation','Expédiée','Livrée','Annulé'))
 );
 
 create table Ligne (
@@ -61,7 +61,7 @@ insert into Produit values (4,'Télévision 4K','Pratique pour regarder des film
 
 
 --TABLE Commande
-insert into Commande values (1,'30/04/2017',45.40,1,'En cours'); --aspirateur + livre
+insert into Commande values (1,'05/05/2017',45.40,1,'En cours'); --aspirateur + livre
 insert into Commande values (2,'01/05/2017',345.50,2,'Validée'); -- livre + console
 insert into Commande values (3,'02/05/2017',915.40,3,'Préparation'); -- livre + télé
 insert into Commande values (4,'03/05/2017',1275.30,4,'Livrée'); -- tout
