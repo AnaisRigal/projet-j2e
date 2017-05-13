@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package metier;
+import entitees.Utilisateur;
+import exceptions.CommandeInexistanteException;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
@@ -20,4 +22,7 @@ public interface GestionCommandeLocal {
 
     String supprimerCommande (BigDecimal idcommande);
     
+    List<Utilisateur> afficherLivraison() throws exceptions.UtilisateurInconnuException;
+    
+    String changerLivraison (BigDecimal idcommande, String etat  ) throws CommandeInexistanteException;
 }

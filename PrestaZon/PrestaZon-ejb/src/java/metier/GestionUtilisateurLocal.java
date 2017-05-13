@@ -26,4 +26,5 @@ public interface GestionUtilisateurLocal {
     
     //liste de tout les utilisateur 
     
+    
 }

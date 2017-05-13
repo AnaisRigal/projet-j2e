@@ -10,6 +10,9 @@ import controllers.LigneFacadeLocal;
 import controllers.ProduitFacadeLocal;
 import entitees.Commande;
 import entitees.Ligne;
+import entitees.Utilisateur;
+import exceptions.CommandeInexistanteException;
+import exceptions.UtilisateurInconnuException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,4 +89,28 @@ public class GestionCommande implements GestionCommandeLocal  {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public List<Utilisateur> afficherLivraison() throws UtilisateurInconnuException {
+        List list = new ArrayList<Utilisateur>();
+        for (Commande c : commande.findAll()){
+            if(c.getEtatcommande().equals("Expédiée")){
+                list.add(c);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public String changerLivraison(BigDecimal idcommande, String etat) throws CommandeInexistanteException {
+        String r = "NOK";
+        Commande c = commande.find((idcommande));
+        if (c!=null && ( c.getEtatcommande().equals("En cours")|| c.getEtatcommande().equals("Validée")||
+          c.getEtatcommande().equals("Préparation")|| c.getEtatcommande().equals("Expédiée")||
+           c.getEtatcommande().equals("Livrée")|| c.getEtatcommande().equals("Annulé"))){
+            c.setEtatcommande(etat);
+            r = "OK";
+        }
+        return r;
+    }
 }
