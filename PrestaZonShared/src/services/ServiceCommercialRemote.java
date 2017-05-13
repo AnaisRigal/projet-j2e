@@ -21,4 +21,10 @@ public interface ServiceCommercialRemote {
     List listeUtilisateurs() throws exceptions.UtilisateurInconnuException;
 
     void supprimer(long idUtilisateur) throws exceptions.UtilisateurInconnuException;
+    
+    List afficherCommandes();
+    
+    String modifierCommande (  BigDecimal idcommande, String etat  );
+
+    String supprimerCommande (BigDecimal idcommande);
 }

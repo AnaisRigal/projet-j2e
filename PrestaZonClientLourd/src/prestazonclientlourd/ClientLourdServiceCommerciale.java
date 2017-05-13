@@ -9,6 +9,7 @@ package prestazonclientlourd;
 
 import exceptions.UtilisateurInconnuException;
 import exceptions.UtilisateurExistantException;
+import java.math.BigDecimal;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import services.ServiceCommercialRemote;
@@ -32,10 +33,14 @@ public class ClientLourdServiceCommerciale {
          InitialContext context = new InitialContext(); 
         System.out.println("start");
         //java:global/PrestaZon/PrestaZon-ejb/Libraries/PrestaZonShared/services/
+        //***********************************************************************************************************
+        //Service Commercial : Gestion utilisateur 
+        System.out.println("Test gestion utilisateur");
         ServiceCommercialRemote souche = (ServiceCommercialRemote) context.lookup("services.ServiceCommercialRemote");
-        
+        // --> afficheUtilisateur               
         System.out.println(souche.listeUtilisateurs());
         
+        // --> ajoutUtilisateur                
                 long idCl =0;
         try {
             idCl = souche.ajoutUtilisateur("Reine", "des neige","frosen","Iceberg",56454685,"fr@wanadoo.fr",1) ;
@@ -44,5 +49,37 @@ public class ClientLourdServiceCommerciale {
         }
         System.out.println(idCl);
         
+        // --> supprimerUtilisateur        
+        try {
+        souche.supprimer(idCl);
+        } catch(Exception e) {
+            System.out.println("suppression\n"+e.getMessage());
+        }
+        
+        
+        //***********************************************************************************************************
+        //Service Commercial : Gestion Commande
+        System.out.println("\n\nTest gestion commande");
+        
+        // --> afficherCommande
+        System.out.println(souche.afficherCommandes());
+        
+        // --> modifierCommande
+        String message;
+        try {
+        //  message = souche.modifierCommande(new BigDecimal(3),new Short("1"),new BigDecimal(2),new BigDecimal(2)) ;
+         message = souche.modifierCommande(new BigDecimal(2),"Livrée") ;
+          System.out.println(message);
+        } catch(Exception e) {
+            System.out.println("modification\n"+e.getMessage());
+        }
+   
+        // --> SupprimerCommande
+        try {
+        message=souche.supprimerCommande(new BigDecimal(2));
+        System.out.println(message);
+        } catch(Exception e) {
+            System.out.println("suppression\n"+e.getMessage());
+        }
     }
 }
