@@ -15,6 +15,8 @@ import entitees.Utilisateur;
 import controllers.UtilisateurFacadeLocal;
 import exceptions.UtilisateurExistantException;
 import exceptions.UtilisateurInconnuException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 
 /**
@@ -35,6 +37,8 @@ public class GestionUtilisateur implements GestionUtilisateurLocal {
         } catch (UtilisateurInconnuException ex) {  
         }
         Utilisateur u = new Utilisateur();
+        
+        u.setIdutilisateur(new BigDecimal(utilisateurFacade.findAll().size()+1));
         u.setNom(nom);
         u.setPrenom(prenom);
         u.setMotdepasse(motDePasse);
@@ -42,6 +46,7 @@ public class GestionUtilisateur implements GestionUtilisateurLocal {
         u.setTelephone(telephone);
         u.setMail(mail);
         u.setIdcompte(idCompte);
+        utilisateurFacade.create(u);
         return u.getIdutilisateur().longValue();
         
     }

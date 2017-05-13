@@ -21,7 +21,7 @@ import javax.ejb.Stateless;
  * @author Marine
  */
 @Stateless
-public class GestionCommande implements GestionCommandeLocal {
+public class GestionCommande implements GestionCommandeLocal  {
     @EJB
     private LigneFacadeLocal ligne;
     
