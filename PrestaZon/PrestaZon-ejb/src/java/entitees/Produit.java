@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Produit.findByIdproduit", query = "SELECT p FROM Produit p WHERE p.idproduit = :idproduit")
     , @NamedQuery(name = "Produit.findByNomproduit", query = "SELECT p FROM Produit p WHERE p.nomproduit = :nomproduit")
     , @NamedQuery(name = "Produit.findByLibproduit", query = "SELECT p FROM Produit p WHERE p.libproduit = :libproduit")
-    , @NamedQuery(name = "Produit.findByPrix", query = "SELECT p FROM Produit p WHERE p.prix = :prix")})
+    , @NamedQuery(name = "Produit.findByPrix", query = "SELECT p FROM Produit p WHERE p.prix = :prix")
+    , @NamedQuery(name = "Produit.findByStock", query = "SELECT p FROM Produit p WHERE p.stock = :stock")})
 public class Produit implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,6 +52,8 @@ public class Produit implements Serializable {
     private String libproduit;
     @Column(name = "PRIX")
     private BigDecimal prix;
+    @Column(name = "STOCK")
+    private Integer stock;
     @OneToMany(mappedBy = "idproduit")
     private Collection<Ligne> ligneCollection;
 
@@ -91,6 +94,14 @@ public class Produit implements Serializable {
 
     public void setPrix(BigDecimal prix) {
         this.prix = prix;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     @XmlTransient

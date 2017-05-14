@@ -8,6 +8,7 @@ package metier;
 import controllers.CommandeFacadeLocal;
 import controllers.LigneFacadeLocal;
 import controllers.ProduitFacadeLocal;
+import controllers.UtilisateurFacadeLocal;
 import entitees.Commande;
 import entitees.Ligne;
 import entitees.Utilisateur;
@@ -33,18 +34,23 @@ public class GestionCommande implements GestionCommandeLocal  {
 
     @EJB
     private ProduitFacadeLocal produit;
+    
+    @EJB
+    private UtilisateurFacadeLocal utilisateur;
     @Override
     public List afficherCommandes() {
     List a = new ArrayList();
     for (Commande c : commande.findAll()) {
-        a.add(c);
+        a.add("Commande : "+c.getIdcommande()+" - "+c.getDatecommande()+" - "+c.getMontantcommande()+" - "+c.getIdutilisateur().getIdutilisateur()+" - "+c.getEtatcommande());
         for (Ligne l : ligne.findAll()) {
             if (l.getIdcommande().getIdcommande()==c.getIdcommande()){
-                 a.add(l);
+                 a.add("\n     Ligne"+l.getIdligne()+" - "+l.getIdproduit()+" - "+l.getQuantite());
             }
+            
         }
+        a.add("\n\n");
+        
       }
-      a.addAll(ligne.findAll());
       return a;
     }
 
@@ -93,9 +99,12 @@ public class GestionCommande implements GestionCommandeLocal  {
     @Override
     public List<Utilisateur> afficherLivraison() throws UtilisateurInconnuException {
         List list = new ArrayList<Utilisateur>();
+        Utilisateur u = null;
         for (Commande c : commande.findAll()){
             if(c.getEtatcommande().equals("Expédiée")){
-                list.add(c);
+                u = utilisateur.find(c.getIdutilisateur());
+                if (u==null) throw new UtilisateurInconnuException();
+                list.add(u);
             }
         }
         return list;
@@ -105,12 +114,32 @@ public class GestionCommande implements GestionCommandeLocal  {
     public String changerLivraison(BigDecimal idcommande, String etat) throws CommandeInexistanteException {
         String r = "NOK";
         Commande c = commande.find((idcommande));
-        if (c!=null && ( c.getEtatcommande().equals("En cours")|| c.getEtatcommande().equals("Validée")||
+        if (c==null  ) throw new CommandeInexistanteException();
+        if (c.getEtatcommande().equals("En cours")|| c.getEtatcommande().equals("Validée")||
           c.getEtatcommande().equals("Préparation")|| c.getEtatcommande().equals("Expédiée")||
-           c.getEtatcommande().equals("Livrée")|| c.getEtatcommande().equals("Annulé"))){
+           c.getEtatcommande().equals("Livrée")|| c.getEtatcommande().equals("Annulé")){
             c.setEtatcommande(etat);
             r = "OK";
         }
         return r;
+    }
+
+    @Override
+    public List consulterCommandes(BigDecimal idUtilisateur) throws UtilisateurInconnuException {
+        List list = new ArrayList();
+        for (Commande c : commande.findAll()){
+            if (c.getIdutilisateur().getIdutilisateur().equals(idUtilisateur)){
+                list.add("Commande : "+c.getIdcommande()+" - "+c.getDatecommande()+" - "+c.getMontantcommande()+" - "+c.getIdutilisateur().getIdutilisateur()+" - "+c.getEtatcommande());
+                for (Ligne l : ligne.findAll()) {
+                    if (l.getIdcommande().getIdcommande()==c.getIdcommande()){
+                         list.add("\n     Ligne"+l.getIdligne()+" - "+l.getIdproduit()+" - "+l.getQuantite());
+                    }
+
+                }
+                list.add("\n\n");
+            }
+        }
+        if (list.size()==0) throw new UtilisateurInconnuException();
+        return list;
     }
 }

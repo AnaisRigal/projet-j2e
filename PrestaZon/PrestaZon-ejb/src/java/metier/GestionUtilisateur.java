@@ -17,6 +17,7 @@ import exceptions.UtilisateurExistantException;
 import exceptions.UtilisateurInconnuException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 
 /**
@@ -30,7 +31,7 @@ public class GestionUtilisateur implements GestionUtilisateurLocal {
     private UtilisateurFacadeLocal utilisateurFacade;
 
     @Override
-    public long ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws UtilisateurExistantException {
+    public BigDecimal ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws UtilisateurExistantException {
         try {
             utilisateurFacade.chercherUtilisateur(mail);
             throw new exceptions.UtilisateurExistantException();
@@ -47,7 +48,7 @@ public class GestionUtilisateur implements GestionUtilisateurLocal {
         u.setMail(mail);
         u.setIdcompte(idCompte);
         utilisateurFacade.create(u);
-        return u.getIdutilisateur().longValue();
+        return u.getIdutilisateur();
         
     }
     
@@ -55,13 +56,29 @@ public class GestionUtilisateur implements GestionUtilisateurLocal {
 
     @Override
     public List<Utilisateur> listeUtilisateurs() throws UtilisateurInconnuException {
-            
-        return utilisateurFacade.findAll();
+        List l =   new ArrayList()  ;
+        if (utilisateurFacade.findAll()==null) throw new UtilisateurInconnuException();
+        for (Utilisateur u : utilisateurFacade.findAll()){
+            l.add("Utilisateur : "+ u.getIdutilisateur()
+            +"\n    Nom : "+u.getNom()
+            +"\n    Prenom : "+u.getPrenom()
+            +"\n    Mail : "+u.getMail()
+            +"\n    MotDePasse : "+u.getMotdepasse()
+            +"\n    Adresse : "+u.getAdresse()
+            +"\n    Tel : "+u.getTelephone()
+            +"\n    idCompte : "+u.getIdcompte()
+            +"\n\n");
+        }
+        return l;
     }
 
     @Override
-    public void supprimer(long idUtilisateur) throws UtilisateurInconnuException {
-       Utilisateur u = utilisateurFacade.find(idUtilisateur);
+    public void supprimer(BigDecimal idUtilisateur) throws UtilisateurInconnuException {
+       Utilisateur u = null;
+       for (Utilisateur ut : utilisateurFacade.findAll()){
+           if(ut.getIdutilisateur().equals(idUtilisateur))
+               u = ut;
+       }
        if (u == null)
            throw new UtilisateurInconnuException();
        utilisateurFacade.remove(u);

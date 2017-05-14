@@ -6,6 +6,7 @@
 package metier;
 import entitees.Utilisateur;
 import exceptions.CommandeInexistanteException;
+import exceptions.UtilisateurInconnuException;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
@@ -25,4 +26,6 @@ public interface GestionCommandeLocal {
     List<Utilisateur> afficherLivraison() throws exceptions.UtilisateurInconnuException;
     
     String changerLivraison (BigDecimal idcommande, String etat  ) throws CommandeInexistanteException;
+    
+    List consulterCommandes( BigDecimal idUtilisateur) throws UtilisateurInconnuException ;
 }

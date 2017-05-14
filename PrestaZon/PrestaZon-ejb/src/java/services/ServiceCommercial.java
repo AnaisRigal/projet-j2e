@@ -29,7 +29,7 @@ public class ServiceCommercial implements ServiceCommercialRemote {
     private GestionCommandeLocal c;
     
     @Override
-    public long ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws UtilisateurExistantException {
+    public BigDecimal ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws UtilisateurExistantException {
         return g.ajoutUtilisateur(nom, prenom, motDePasse, adresse, telephone, mail, idCompte);
     }
 
@@ -39,7 +39,7 @@ public class ServiceCommercial implements ServiceCommercialRemote {
     }
 
     @Override
-    public void supprimer(long idUtilisateur) throws UtilisateurInconnuException {
+    public void supprimer(BigDecimal idUtilisateur) throws UtilisateurInconnuException {
         g.supprimer(idUtilisateur);
     }
 
