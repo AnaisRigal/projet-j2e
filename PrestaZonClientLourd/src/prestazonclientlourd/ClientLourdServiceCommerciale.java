@@ -31,19 +31,20 @@ public class ClientLourdServiceCommerciale {
          System.setProperty("org.omg.CORBA.ORBInitialPort", "3700"); 
          System.setProperty("java.rmi.server.codebase","file:/C:/Users/Marine/Documents/projet-j2e-testing/PrestaZon/PrestaZon-ejb/src/java/entitees");
          InitialContext context = new InitialContext(); 
-        System.out.println("start");
+        System.out.println("Service commerciale");
+         ServiceCommercialRemote souche = (ServiceCommercialRemote) context.lookup("services.ServiceCommercialRemote");
+      
         //java:global/PrestaZon/PrestaZon-ejb/Libraries/PrestaZonShared/services/
         //***********************************************************************************************************
         //Service Commercial : Gestion utilisateur 
         System.out.println("Test gestion utilisateur");
-        ServiceCommercialRemote souche = (ServiceCommercialRemote) context.lookup("services.ServiceCommercialRemote");
-        // --> afficheUtilisateur               
+         // --> afficheUtilisateur               
         System.out.println(souche.listeUtilisateurs());
         
         // --> ajoutUtilisateur                
-                long idCl =0;
+                BigDecimal idCl = new BigDecimal(5);
         try {
-            idCl = souche.ajoutUtilisateur("Reine", "des neige","frosen","Iceberg",56454685,"fr@wanadoo.fr",1) ;
+    //        idCl =  souche.ajoutUtilisateur("Reine", "des neige","frosen","Iceberg",56454685,"fr@wanadoo.fr",1) ;
         } catch(Exception e) {
             System.out.println("création");
         }
@@ -53,7 +54,7 @@ public class ClientLourdServiceCommerciale {
         try {
         souche.supprimer(idCl);
         } catch(Exception e) {
-            System.out.println("suppression\n"+e.getMessage());
+            System.out.println("suppression\n"+e.getMessage()+e.getClass()+e);
         }
         
         
