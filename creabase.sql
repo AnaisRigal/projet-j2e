@@ -21,7 +21,9 @@ idProduit decimal(20),
 nomProduit varchar(50),
 libProduit varchar(100),
 prix decimal(6,2),
-constraint pk_Produit primary key (idProduit)
+stock int,
+constraint pk_Produit primary key (idProduit),
+constraint ck_Produit_stock check (stock >=0)
 );
 
 create table Commande (
@@ -54,10 +56,10 @@ insert into Utilisateur values (4,'Aztakès','Hélène','mdp4','adr4',0613141516
 
 
 --TABLE Produit
-insert into Produit values (1,'Aspirateur','Mieux qu''un balai',29.90);
-insert into Produit values (2,'Livre','Bon pour la culture',15.50);
-insert into Produit values (3,'Nintendo Switch','Super console',330.0);
-insert into Produit values (4,'Télévision 4K','Pratique pour regarder des films',899.90);
+insert into Produit values (1,'Aspirateur','Mieux qu''un balai',29.90,10);
+insert into Produit values (2,'Livre','Bon pour la culture',15.50,0);
+insert into Produit values (3,'Nintendo Switch','Super console',330.0,20);
+insert into Produit values (4,'Télévision 4K','Pratique pour regarder des films',899.90,30);
 
 
 --TABLE Commande
