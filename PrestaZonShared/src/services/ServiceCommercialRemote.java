@@ -15,12 +15,12 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface ServiceCommercialRemote {
-    long ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws exceptions.UtilisateurExistantException;
+    BigDecimal ajoutUtilisateur(String nom, String prenom, String motDePasse, String adresse, long telephone, String mail, int idCompte) throws exceptions.UtilisateurExistantException;
     
 
     List listeUtilisateurs() throws exceptions.UtilisateurInconnuException;
 
-    void supprimer(long idUtilisateur) throws exceptions.UtilisateurInconnuException;
+    void supprimer(BigDecimal idUtilisateur) throws exceptions.UtilisateurInconnuException;
     
     List afficherCommandes();
     
